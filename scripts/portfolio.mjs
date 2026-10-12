@@ -4,6 +4,7 @@ import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {getDb,REPO_ROOT} from './lib/db.mjs';
 import {parseCsv,pick} from './lib/csv.mjs';
+import {table as alignedTable} from './lib/format.mjs';
 
 export const entities={
  projects:['name','sponsor','manager','currency','status','budget','target_finish','business_case','expected_benefit','benefit_owner','benefit_due','benefit_evidence','retention_review','legal_hold'],
@@ -41,7 +42,7 @@ export const reads={
 export const commands=[...Object.keys(reads),'show','add','update','log','depend','approve-change','reject-change','close-project','import','export','weekly-review','draft-steering-pack','draft-change-request','help'];
 function opts(args){const positional=[],flags={};for(const arg of args){if(arg.startsWith('--')){const i=arg.indexOf('=');flags[(i<0?arg.slice(2):arg.slice(2,i)).replaceAll('-','_')]=i<0?true:arg.slice(i+1);}else positional.push(arg);}return {positional,flags};}
 function need(o,k){if(o[k]===undefined||o[k]===true||String(o[k]).trim()==='')throw Error(`Required --${k.replaceAll('_','-')}=<value>`);return String(o[k]).trim();}
-export function format(rows){if(!Array.isArray(rows))return JSON.stringify(rows,null,2);if(!rows.length)return 'No records.';const cols=Object.keys(rows[0]);const values=rows.map(r=>cols.map(c=>r[c]===null?'':typeof r[c]==='object'?JSON.stringify(r[c]):String(r[c])));const widths=cols.map((c,i)=>Math.max(c.length,...values.map(r=>r[i].length)));return [cols,...values].map(r=>r.map((s,i)=>s.padEnd(widths[i])).join(' | ')).join('\n');}
+export function format(rows){if(!Array.isArray(rows))return JSON.stringify(rows,null,2);if(!rows.length)return 'No records.';return alignedTable(rows,Object.keys(rows[0]).map(key=>({key,label:key.replaceAll('_',' ')})));}
 function tableName(name){if(!entities[name])throw Error(`Unknown record type ${name}. Choose ${Object.keys(entities).join(', ')}`);return name;}
 export async function resolve(db,table,term){tableName(table);if(!term)throw Error(`Provide a ${table} name or id`);const rows=await db.query(`select * from ${table} where lower(${entities[table].includes('name')?'name':'id::text'})=lower($1) or starts_with(id::text,lower($1)) order by id`,[term]);if(rows.length!==1)throw Error(`${rows.length?'Ambiguous':'No matching'} ${table}: ${term}\n${format(rows.map(r=>({id:r.id,name:r.name||r.id})))}`);return rows[0];}
 async function audit(db,actor,action,entity,before,after){await db.query('insert into audit_log(actor,action,entity,record_id,before_data,after_data) values($1,$2,$3,$4,$5,$6)',[actor,action,entity,after?.id||before?.id||null,before?JSON.stringify(before):null,after?JSON.stringify(after):null]);}
