@@ -5,12 +5,16 @@
     "subtitle": "Read-only. Amounts stay in each project currency.",
     "sections": [
       {
-        "title": "Delivery and budget",
-        "sql": "select * from portfolio_status order by name"
+        "title": "Delivery",
+        "sql": "select name,manager,status,approved_finish,overdue_tasks,high_risks,pending_changes from portfolio_status order by name"
+      },
+      {
+        "title": "Budget by project currency",
+        "sql": "select name,currency,approved_budget,round(actual_cost,2) actual_cost,round(approved_budget-actual_cost,2) remaining_budget from portfolio_status order by name"
       },
       {
         "title": "Needs attention",
-        "sql": "select * from attention_items order by due_date"
+        "sql": "select kind,project,item,owner,due_date from attention_items order by due_date"
       }
     ]
   },
@@ -20,11 +24,11 @@
     "sections": [
       {
         "title": "People and hours",
-        "sql": "select * from capacity_week order by week_start,name"
+        "sql": "select week_start,name,weekly_hours,allocated_hours,overbooked_hours,projects from capacity_week order by week_start,name"
       },
       {
         "title": "Predecessors not finished",
-        "sql": "select * from dependency_watch order by project,task"
+        "sql": "select project,task,start_date,predecessor,predecessor_project,predecessor_finish from dependency_watch order by project,task"
       }
     ]
   }

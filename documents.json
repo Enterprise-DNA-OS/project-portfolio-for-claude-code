@@ -7,7 +7,7 @@
     "sections": [
       {
         "title": "Approved budget and delivery",
-        "sql": "select * from portfolio_status where id=$1"
+        "sql": "select name,currency,budget,approved_budget,round(actual_cost,2) actual_cost,approved_finish from portfolio_status where id=$1"
       },
       {
         "title": "Milestones",

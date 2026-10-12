@@ -10,14 +10,14 @@ import {execute,commands,reads,resolve} from './portfolio.mjs';
 import {parseCsv} from './lib/csv.mjs';
 const temp=mkdtempSync(path.join(os.tmpdir(),'portfolio-test-'));
 // Keep tests away from working databases, including values in local env files.
-process.env.DATABASE_URL=process.env.PORTFOLIO_TEST_DATABASE_URL||'';process.env.DATA_DIR=path.join(temp,'db');process.env.OUTPUT_DIR=temp;
+process.env.DATABASE_URL=process.env.TEST_DATABASE_URL||'';process.env.DATA_DIR=path.join(temp,'db');process.env.OUTPUT_DIR=temp;
 let db;const drafts=[];let assertions=0;const seen=new Set();
 const ok=(v,m)=>{assert.ok(v,m);assertions++;};
 const run=async(...args)=>{seen.add(args[0]);return execute(db,args);};
 const fails=async(args,re)=>{seen.add(args[0]);await assert.rejects(()=>execute(db,args),re);assertions++;};
 function child(file,args=[],expected=0){const p=spawnSync(process.execPath,[file,...args],{cwd:REPO_ROOT,env:process.env,encoding:'utf8'});assert.equal(p.status,expected,p.stderr||p.stdout);assertions++;return p;}
 try{
- db=await getDb();if(db.mode==='postgres'){const existing=await db.query("select table_name from information_schema.tables where table_schema='public'");assert.equal(existing.length,0,'PORTFOLIO_TEST_DATABASE_URL must point to an empty disposable database');}await migrate(db);ok((await migrate(db)).ran.length===0,'Migration repeats safely');await seed(db);await seed(db);
+ db=await getDb();if(db.mode==='postgres'){const existing=await db.query("select table_name from information_schema.tables where table_schema='public'");assert.equal(existing.length,0,'TEST_DATABASE_URL must point to an empty disposable database');}await migrate(db);ok((await migrate(db)).ran.length===0,'Migration repeats safely');await seed(db);await seed(db);
  ok(Number((await db.query('select count(*) n from projects'))[0].n)===3,'Seed is idempotent');
  for(const command of Object.keys(reads)){const rows=await run(command);ok(Array.isArray(rows),command);}
  const budget=(await run('budgets')).find(r=>r.name==='Warehouse renewal');ok(Number(budget.actual_cost)===89000,'Time and expenses are aggregated without multiplying');ok(Number(budget.remaining_budget)===-4000,'Overrun is visible');
