@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Which projects are already over their approved budget?",
+    "command": "budgets"
+  },
+  {
+    "question": "Who is committed to more hours than they have this week?",
+    "command": "capacity"
+  },
+  {
+    "question": "Which milestones slipped from their original dates?",
+    "command": "milestones"
+  },
+  {
+    "question": "Which project is waiting on unfinished work in another project?",
+    "command": "dependencies"
+  },
+  {
+    "question": "Which open tasks have gone two weeks without an update?",
+    "command": "attention"
+  },
+  {
+    "question": "What budget and date changes are waiting for a second person?",
+    "command": "changes"
+  },
+  {
+    "question": "Which sponsor decisions are already overdue?",
+    "command": "decisions"
+  },
+  {
+    "question": "Which promised benefits are due without evidence?",
+    "command": "benefits"
+  },
+  {
+    "question": "Which risks have a high score but no recent review?",
+    "command": "risks"
+  },
+  {
+    "question": "Which records need a retention or evidence review?",
+    "command": "compliance"
+  }
+]

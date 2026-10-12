@@ -1,11 +1,50 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
+    "name": "steering-pack",
+    "title": "Project steering pack",
+    "for_each": "select id,name from projects order by name",
     "file": "name",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Approved budget and delivery",
+        "sql": "select * from portfolio_status where id=$1"
+      },
+      {
+        "title": "Milestones",
+        "sql": "select name,owner,baseline_finish,finish_date,percent_complete,evidence from tasks where project_id=$1 and milestone order by finish_date"
+      },
+      {
+        "title": "Risks",
+        "sql": "select name,owner,likelihood*impact score,mitigation,review_due,status from risks where project_id=$1 order by review_due"
+      },
+      {
+        "title": "Decisions",
+        "sql": "select name,owner,due_date,outcome from decisions where project_id=$1 order by due_date"
+      }
+    ]
+  },
+  {
+    "name": "change-request",
+    "title": "Change request and decision",
+    "for_each": "select id,name from changes order by name",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Scope, cost and decision",
+        "sql": "select p.name project,p.currency,c.name,c.reason,c.requested_by,c.cost_delta,c.finish_delta_days,c.status,c.decided_by,c.decision_note from changes c join projects p on p.id=c.project_id where c.id=$1"
+      }
+    ]
+  },
+  {
+    "name": "closure-record",
+    "title": "Closure and benefits record",
+    "for_each": "select id,name from projects where status='closed' order by name",
+    "file": "name",
+    "sections": [
+      {
+        "title": "Benefits and retention",
+        "sql": "select name,status,expected_benefit,benefit_owner,benefit_due,benefit_evidence,retention_review,legal_hold from projects where id=$1"
+      }
     ]
   }
 ]

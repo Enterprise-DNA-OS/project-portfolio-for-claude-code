@@ -1,13 +1,30 @@
 [
   {
-    "name": "week",
-    "title": "This week",
-    "subtitle": "Project Portfolio for Claude Code: what needs attention, rendered by npm run view",
+    "name": "portfolio",
+    "title": "Portfolio review",
+    "subtitle": "Read-only. Amounts stay in each project currency.",
     "sections": [
       {
+        "title": "Delivery and budget",
+        "sql": "select * from portfolio_status order by name"
+      },
+      {
         "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "sql": "select * from attention_items order by due_date"
+      }
+    ]
+  },
+  {
+    "name": "capacity",
+    "title": "Weekly commitments",
+    "sections": [
+      {
+        "title": "People and hours",
+        "sql": "select * from capacity_week order by week_start,name"
+      },
+      {
+        "title": "Predecessors not finished",
+        "sql": "select * from dependency_watch order by project,task"
       }
     ]
   }

@@ -1,24 +1,9 @@
-# Why there is no front end
+# Why no front end
 
-Celoxis is a database with a subscription. The tables underneath it are ordinary: a few entities, a few relationships, a handful of workflows you repeat every week. What you pay for is the layer on top that lets people who do not write SQL get at those tables. Screens, filters, dashboards, forms.
+The weekly portfolio review is questions over records: what slipped, what costs more, who is committed twice, and which decision is blocking delivery. The database and agent commands handle those jobs. `npm run view` produces read-only HTML for a manager to read or print. `npm run docs` produces steering packs, change records and closure records in the name and colours from brand.json.
 
-That layer used to be the whole product, because talking to a database was hard. It is not hard any more. Open this folder in Claude Code, describe what you want, and it writes the query, runs it, and explains the answer. Ask a question the dashboard never had a chart for and you still get an answer.
+There is no interactive Gantt, drag and drop, mobile capture, offline team sync or automatic critical-path scheduler. Dependencies flag unfinished predecessors and date conflicts; they do not reschedule a plan. Weekly capacity uses recorded commitments against a person's weekly hours, without holiday calendars. Costs use entered rates and expense amounts in each project's currency; there is no exchange-rate conversion or invoice/payment engine. Baselines stay fixed and approved change deltas stay separate.
 
-## What you gain
+The free base is for a trusted operator or technical team. Hosted sign-in, granular permissions, connected systems and custom screens are work Enterprise DNA scopes with the business. Static exports can contain private information: keep them inside the team's controlled storage. They contain no action buttons and send nothing.
 
-- **Better answers.** A dashboard shows what the vendor decided to chart. Here you ask your own question, in your own words, and get it answered against your own data.
-- **No seats.** Everyone who needs to look can look. The bill does not grow with headcount.
-- **Your data in your Postgres.** Plain tables. Back them up, query them from anything, leave any time. There is no export step because there is nothing to leave.
-- **A process that matches you.** When your way of working changes, you add a command. You do not wait for a feature request to clear.
-
-## What you give up
-
-- **A visual board.** Stages are a table you ask about, not cards you drag.
-- **A phone app.** It runs where Claude Code runs.
-- **A vendor help desk.** This is open source. Enterprise DNA supports the installed version for businesses that want someone to call.
-
-## Who this fits
-
-Small teams who already use Claude Code, or who would rather learn to ask than learn another interface. If your team needs a screen to look at all day, keep Celoxis. If you need the answers more than the screens, this is cheaper, faster and yours.
-
-Installed and run for you: https://enterprisedna.co/omni/instead-of/celoxis
+Omni by Enterprise DNA installs, customises and runs this around the business for a setup fee and then a retainer.

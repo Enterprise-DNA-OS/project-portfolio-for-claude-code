@@ -1,0 +1,24 @@
+{
+  "captured": "2026-10-12",
+  "fixture": "supabase/seed.sql",
+  "screens": [
+    {
+      "title": "Weekly attention",
+      "ask": "What needs an owner’s attention this week?",
+      "command": "npm run portfolio -- attention",
+      "output": "kind           | project           | item                          | owner | due_date  \nbenefit review | Legacy reporting  | Retire spreadsheets           | Mere  | 2026-09-12\nstale update   | Warehouse renewal | Dispatch acceptance           | Aroha | 2026-09-24\nstale update   | Warehouse renewal | Training sign-off             | Aroha | 2026-09-26\nrisk review    | Warehouse renewal | Supplier acceptance delay     | Aroha | 2026-10-08\nbenefit review | Warehouse renewal | Reduce dispatch rework        | Mere  | 2026-10-09\ndecision       | Customer portal   | Confirm pilot customer cohort | Ravi  | 2026-10-10\nlate task      | Warehouse renewal | Dispatch acceptance           | Aroha | 2026-10-10"
+    },
+    {
+      "title": "Weekly commitments",
+      "ask": "Who is booked beyond their available hours?",
+      "command": "npm run portfolio -- capacity",
+      "output": "week_start | name  | weekly_hours | allocated_hours | overbooked_hours | projects                          \n2026-10-12 | Aroha | 32.00        | 44.00           | 12.00            | Customer portal, Warehouse renewal\n2026-10-12 | Priya | 40.00        | 30.00           | 0                | Customer portal"
+    },
+    {
+      "title": "Milestone review",
+      "ask": "Which milestones have slipped from their original dates?",
+      "command": "npm run portfolio -- milestones",
+      "output": "project           | name                | owner | finish_date | slip_days | percent_complete | evidence\nWarehouse renewal | Dispatch acceptance | Aroha | 2026-10-10  | 8         | 70.00            |         \nWarehouse renewal | Training sign-off   | Aroha | 2026-10-19  | 0         | 0.00             |         \nCustomer portal   | Portal pilot        | Priya | 2026-10-26  | 7         | 20.00            |"
+    }
+  ]
+}

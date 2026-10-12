@@ -1,0 +1,9 @@
+{
+  "external_id": "ID",
+  "name": "Name",
+  "start_date": "Start",
+  "finish_date": "Finish",
+  "percent_complete": "% Complete",
+  "planned_hours": "Work",
+  "owner": "Assigned To"
+}
